@@ -3,16 +3,19 @@ use crate::resource::Runnable;
 use std::sync::Arc;
 use std::thread;
 
-pub struct CPU {
-    shared_flash: Arc<Flash>,
-}
+pub struct CPU {}
 
-impl<T> CPU {
-    fn run(&self, tasks: Vec<Box<dyn Runnable>>) {
-        thread::spawn(move || {
+impl CPU {
+    pub fn new() -> Self {
+        CPU {}
+    }
+
+    pub fn run(shared_flash: Arc<Flash>, tasks: Vec<Box<dyn Runnable<ValueType = i32>>>) {
+        let handle = thread::spawn(move || {
             for task in tasks {
-                task.run(self.shared_flash.clone());
+                task.run(shared_flash.clone());
             }
         });
+        handle.join().unwrap();
     }
 }

@@ -13,9 +13,11 @@ impl Flash {
     }
 
     pub fn update_resource_value(&self, resource_name: String, value: String) {
+        println!("{}: {}", resource_name ,value);
         self.store.lock().unwrap().insert(resource_name, value);
     }
 
+    #[warn(dead_code)]
     fn to_hex(&self) {
         todo!()
     }

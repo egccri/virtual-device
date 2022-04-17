@@ -4,8 +4,13 @@ use std::sync::Arc;
 
 pub struct ResourceInt {}
 
-impl ResourceNeed for ResourceInt {
+impl ResourceInt {
+    pub fn new() -> Self {
+        ResourceInt {}
+    }
+}
 
+impl ResourceNeed for ResourceInt {
     type ValueType = i32;
 
     fn value(&self) -> Self::ValueType {
@@ -18,7 +23,7 @@ impl ResourceNeed for ResourceInt {
 }
 
 impl Runnable for ResourceInt {
-    fn run(self, shared_flash: Arc<Flash>) {
+    fn run(&self, shared_flash: Arc<Flash>) {
         let value = self.value();
         self.write(value, shared_flash);
     }

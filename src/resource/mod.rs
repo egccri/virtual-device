@@ -2,14 +2,13 @@ use crate::device::flash::Flash;
 use crate::resource::resource_int::ResourceInt;
 use std::sync::Arc;
 
-mod resource_int;
+pub mod resource_int;
 
 pub enum Resource {
     Int(ResourceInt),
 }
 
 pub trait ResourceNeed {
-
     type ValueType;
 
     fn value(&self) -> Self::ValueType;
