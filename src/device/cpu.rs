@@ -10,7 +10,7 @@ impl CPU {
         CPU {}
     }
 
-    pub fn run(shared_flash: Arc<Flash>, tasks: Vec<Box<dyn Runnable<ValueType = i32>>>) {
+    pub fn run(shared_flash: Arc<Flash>, tasks: Vec<Box<dyn Runnable>>) {
         let handle = thread::spawn(move || {
             for task in tasks {
                 task.run(shared_flash.clone());

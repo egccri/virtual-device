@@ -1,19 +1,16 @@
 use crate::device::flash::Flash;
 use crate::resource::resource_int::ResourceInt;
+use std::any::Any;
 use std::sync::Arc;
 
+pub mod resource_float;
 pub mod resource_int;
-
-pub enum Resource {
-    Int(ResourceInt),
-}
+pub mod types;
 
 pub trait ResourceNeed {
-    type ValueType;
+    fn value(&self) -> Box<dyn Any>;
 
-    fn value(&self) -> Self::ValueType;
-
-    fn write(&self, value: Self::ValueType, shared_flash: Arc<Flash>);
+    fn write(&self, value: Box<dyn Any>, shared_flash: Arc<Flash>);
 }
 
 pub trait Runnable: ResourceNeed + Send + Sync + 'static {
