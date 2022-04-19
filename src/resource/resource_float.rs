@@ -15,8 +15,6 @@ impl ResourceNeed for ResourceFloat {
     fn value(&self) -> Box<dyn Any> {
         let value: f32 = 1.5;
         Box::new(value)
-
-        // Box::new(1.5)
     }
 
     fn write(&self, value: Box<dyn Any>, shared_flash: Arc<Flash>) {

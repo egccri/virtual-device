@@ -17,6 +17,10 @@ impl Flash {
         self.store.lock().unwrap().insert(resource_name, value);
     }
 
+    pub fn to_json(&self) {
+        todo!()
+    }
+
     fn to_hex(&self) {
         todo!()
     }

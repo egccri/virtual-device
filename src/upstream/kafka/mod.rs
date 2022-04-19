@@ -1,2 +1,1 @@
-mod kafka_upstream;
-mod utils;
+pub mod kafka_upstream;

@@ -10,7 +10,8 @@ mod device;
 mod resource;
 mod upstream;
 
-fn main() {
+#[tokio::main]
+async fn main() {
     // initial one device
     let flash = Flash::new();
     let shared_flash = Arc::new(flash);
@@ -23,4 +24,11 @@ fn main() {
     vec.push(Box::new(resource_float));
 
     CPU::run(shared_flash, vec);
+
+    match upstream::kafka::kafka_upstream::push().await {
+        Ok(_) => {}
+        Err(err) => {
+            println!("{}", err)
+        }
+    };
 }

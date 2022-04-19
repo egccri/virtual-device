@@ -1,5 +1,4 @@
 use crate::device::flash::Flash;
-use crate::resource::resource_int::ResourceInt;
 use std::any::Any;
 use std::sync::Arc;
 

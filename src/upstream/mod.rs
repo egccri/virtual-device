@@ -1,1 +1,1 @@
-mod kafka;
+pub mod kafka;
