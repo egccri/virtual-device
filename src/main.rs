@@ -5,7 +5,7 @@ use crate::resource::resource_int::ResourceInt;
 use crate::resource::Runnable;
 use std::sync::Arc;
 
-mod config;
+pub mod config;
 mod device;
 mod resource;
 mod upstream;

@@ -1,27 +1,30 @@
 use crate::config::device_profile::AccessMode::{ReadOnly, ReadWrite};
-use serde::{Deserialize, Serialize};
+use serde::{Deserialize, Deserializer, Serialize};
 use std::fmt::{self, Display, Formatter};
 
 #[derive(Debug, PartialEq, Serialize, Deserialize)]
-pub struct Devices {
+pub struct DeviceList {
     devices: Vec<Device>,
 }
 
 #[derive(Debug, PartialEq, Serialize, Deserialize)]
 pub struct Device {
+    device_id: String,
+    device_name: String,
+    device_description: Option<String>,
     resources: Vec<DeviceResource>,
 }
 
 #[derive(Debug, PartialEq, Serialize, Deserialize)]
 pub struct DeviceResource {
     resource_name: String,
-    description: String,
+    resource_description: String,
     value: Value,
 }
 
 #[derive(Debug, PartialEq, Serialize, Deserialize)]
 pub struct Value {
-    value_type: Type,
+    // value_type: Type,
     access_mode: AccessMode,
     minimum: String,
     maximum: String,
@@ -30,9 +33,22 @@ pub struct Value {
 #[derive(Debug, PartialEq, Serialize, Deserialize)]
 pub enum Type {
     STRING(String),
-    INI(i32),
+    INT(i32),
     DOUBLE(f32),
 }
+
+// impl<'de> Deserialize<'de> for Type {
+//     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+//         where D: Deserializer<'de>
+//     {
+//         let s = String::deserialize(deserializer)?;
+//         if s == "INT" {
+//             Ok(Type::INT(0))
+//         } else {
+//             Ok(Type::INT(0))
+//         }
+//     }
+// }
 
 #[derive(Debug, PartialEq, Serialize, Deserialize)]
 pub enum AccessMode {
