@@ -1,14 +1,20 @@
-use crate::device::flash::Flash;
+use crate::virtualdevice::flash::Flash;
 use crate::resource::{ResourceNeed, Runnable};
 use rand::Rng;
 use std::any::Any;
 use std::sync::Arc;
+use crate::device::device_profile::DeviceResource;
 
-pub struct ResourceInt {}
+pub struct ResourceInt {
+    // must defined in the profile
+    device_resource: &'static DeviceResource,
+}
 
 impl ResourceInt {
-    pub fn new() -> Self {
-        ResourceInt {}
+    pub fn new(device_resource: &'static DeviceResource) -> Self {
+        ResourceInt {
+            device_resource,
+        }
     }
 }
 
@@ -21,7 +27,7 @@ impl ResourceNeed for ResourceInt {
 
     fn write(&self, value: Box<dyn Any>, shared_flash: Arc<Flash>) {
         shared_flash.update_resource_value(
-            "int".to_string(),
+            self.device_resource.get_resource_name(),
             value.downcast::<i32>().unwrap().to_string(),
         )
     }

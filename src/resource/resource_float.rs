@@ -1,13 +1,20 @@
-use crate::device::flash::Flash;
+use crate::virtualdevice::flash::Flash;
 use crate::resource::{ResourceNeed, Runnable};
 use std::any::Any;
+use std::ops::Deref;
 use std::sync::Arc;
+use crate::device::device_profile::DeviceResource;
 
-pub struct ResourceFloat {}
+pub struct ResourceFloat {
+    // must device in the profile
+    device_resource: &'static DeviceResource,
+}
 
 impl ResourceFloat {
-    pub fn new() -> Self {
-        ResourceFloat {}
+    pub fn new(device_resource: &'static DeviceResource) -> Self {
+        ResourceFloat {
+            device_resource,
+        }
     }
 }
 
@@ -19,7 +26,7 @@ impl ResourceNeed for ResourceFloat {
 
     fn write(&self, value: Box<dyn Any>, shared_flash: Arc<Flash>) {
         shared_flash.update_resource_value(
-            "float".to_string(),
+            self.device_resource.get_resource_name(),
             value.downcast::<f32>().unwrap().to_string(),
         )
     }

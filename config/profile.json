@@ -1,0 +1,28 @@
+{
+  "profile_name": "crane",
+  "profile_description": "普通起重机",
+  "device_resources": [
+    {
+      "resource_name": "current",
+      "resource_description": "电流",
+      "value": {
+        "value_type": "FLOAT",
+        "access_mode": "ReadOnly",
+        "minimum": "0",
+        "maximum": "100",
+        "unit": "A"
+      }
+    },
+    {
+      "resource_name": "voltage",
+      "resource_description": "电压",
+      "value": {
+        "value_type": "FLOAT",
+        "access_mode": "ReadOnly",
+        "minimum": "0",
+        "maximum": "300",
+        "unit": "V"
+      }
+    }
+  ]
+}

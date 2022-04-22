@@ -14,3 +14,4 @@ clap = "3.0.0-rc.4"
 rand = "0.8.5"
 rdkafka = { version = "0.25", features = ["cmake-build"] }
 tokio = { version = "1", features = ["full"] }
+lazy_static = "1.4.0"

@@ -30,7 +30,7 @@ pub async fn push() -> Result<(), Box<dyn std::error::Error>> {
     // 重排序问题
     config.set("retries", "3");
     // 如果不开启幂等，又不想发生重排序，飞行窗口需要设置为1，如果开启幂等，这个配置不需要配置
-    // config.set("max.in.flight.requests.per.connection", "5");
+    // device.set("max.in.flight.requests.per.connection", "5");
     // 幂等
     config.set("enable.idempotence", "true");
 

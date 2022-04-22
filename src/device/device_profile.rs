@@ -1,9 +1,15 @@
-use crate::config::device_profile::AccessMode::{ReadOnly, ReadWrite};
-use serde::{Deserialize, Deserializer, Serialize};
+use crate::device::device_profile::AccessMode::{ReadOnly, ReadWrite};
+use serde::{Deserialize, Serialize};
 use std::fmt::{self, Display, Formatter};
+use crate::resource::VirtualResource;
+
+/// There is a small different with kubeedge and edgex virtualdevice model or virtualdevice profile.
+/// This profile doesn't support report single resource, so resource's attrs are unsupported,
+/// if need like timestamp attr, define it as a single resource in virtualdevice resource level.
 
 #[derive(Debug, PartialEq, Serialize, Deserialize)]
 pub struct DeviceList {
+    device_num: Option<i32>,
     devices: Vec<Device>,
 }
 
@@ -12,43 +18,40 @@ pub struct Device {
     device_id: String,
     device_name: String,
     device_description: Option<String>,
-    resources: Vec<DeviceResource>,
+    device_profile: String,
+    virtual_resources: Vec<VirtualResource>
+}
+
+#[derive(Debug, PartialEq, Serialize, Deserialize)]
+pub struct DeviceProfile {
+    profile_name: String,
+    profile_description: String,
+    pub(crate) device_resources: Vec<DeviceResource>,
 }
 
 #[derive(Debug, PartialEq, Serialize, Deserialize)]
 pub struct DeviceResource {
-    resource_name: String,
+    pub(crate) resource_name: String,
     resource_description: String,
     value: Value,
+    // virtual_resource: String,
 }
 
 #[derive(Debug, PartialEq, Serialize, Deserialize)]
 pub struct Value {
-    // value_type: Type,
+    value_type: Type,
     access_mode: AccessMode,
     minimum: String,
     maximum: String,
+    unit: String,
 }
 
 #[derive(Debug, PartialEq, Serialize, Deserialize)]
 pub enum Type {
-    STRING(String),
-    INT(i32),
-    DOUBLE(f32),
+    STRING,
+    INT,
+    FLOAT,
 }
-
-// impl<'de> Deserialize<'de> for Type {
-//     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
-//         where D: Deserializer<'de>
-//     {
-//         let s = String::deserialize(deserializer)?;
-//         if s == "INT" {
-//             Ok(Type::INT(0))
-//         } else {
-//             Ok(Type::INT(0))
-//         }
-//     }
-// }
 
 #[derive(Debug, PartialEq, Serialize, Deserialize)]
 pub enum AccessMode {

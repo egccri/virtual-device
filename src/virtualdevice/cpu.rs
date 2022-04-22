@@ -1,4 +1,4 @@
-use crate::device::flash::Flash;
+use crate::virtualdevice::flash::Flash;
 use crate::resource::Runnable;
 use std::sync::Arc;
 use std::thread;
