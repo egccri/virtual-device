@@ -28,21 +28,25 @@ mod test {
     use std::fs::File;
     use std::io::Read;
     use std::string::String;
-    use crate::parse_profiles;
+    use crate::device::parse_profiles;
 
     #[test]
     fn parse_device_test() {
         parse_profiles();
-        let device_json = File::open("config/device.json").expect("Device config file open error!");
+        let device_json =
+            File::open("config/device.json").expect("Device config file open error!");
         let u: DeviceList = serde_json::from_reader(device_json).unwrap();
         println!("{:?}", u);
+
         let mut device_toml =
             File::open("config/device.toml").expect("Device config file open error!");
         let mut toml_string = String::new();
         device_toml.read_to_string(&mut toml_string);
         let u: DeviceList = toml::from_slice(toml_string.as_bytes()).unwrap();
         println!("{:?}", u);
-        let device_yaml = File::open("config/device.yaml").expect("Device config file open error!");
+
+        let device_yaml =
+            File::open("config/device.yaml").expect("Device config file open error!");
         let u: DeviceList = serde_yaml::from_reader(device_yaml).unwrap();
         println!("{:?}", u);
     }

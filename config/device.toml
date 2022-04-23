@@ -1,5 +1,10 @@
 device_num = 2
 
+virtual_resources = [
+    "crane:current:ResourceFloat",
+    "crane:voltage:ResourceFloat"
+]
+
 [[devices]]
 device_id = "001"
 device_name = "设备001"

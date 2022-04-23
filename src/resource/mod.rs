@@ -26,20 +26,22 @@ impl<'de> Deserialize<'de> for VirtualResource {
         D: Deserializer<'de>,
     {
         let s = String::deserialize(deserializer)?;
-        // let a = s.split_once(":");
-        let resource_name = "resource_name";
-        if s == "ResourceFloat" {
+        let a: Vec<&str> = s.split(":").collect();
+        let profile_name = a[0];
+        let resource_name = a[1];
+        let virtual_resource = a[2];
+        if virtual_resource == "ResourceFloat" {
             Ok(ResourceFloat(
                 DEVICE_PROFILES
-                    .get("crane")
+                    .get(profile_name)
                     .unwrap()
                     .get_resource(resource_name),
                 1,
             ))
-        } else if s == "ResourceInt" {
+        } else if virtual_resource == "ResourceInt" {
             Ok(ResourceInt(
                 DEVICE_PROFILES
-                    .get("crane")
+                    .get(profile_name)
                     .unwrap()
                     .get_resource(resource_name),
                 1,
@@ -47,7 +49,7 @@ impl<'de> Deserialize<'de> for VirtualResource {
         } else {
             Ok(ResourceInt(
                 DEVICE_PROFILES
-                    .get("crane")
+                    .get(profile_name)
                     .unwrap()
                     .get_resource(resource_name),
                 1,

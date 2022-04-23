@@ -1,1 +1,1 @@
-pub mod kafka_upstream;
+pub mod kafka_reporter;

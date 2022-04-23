@@ -15,7 +15,7 @@
     }
   ],
   "virtual_resources": [
-    "ResourceFloat",
-    "ResourceInt"
+    "crane:current:ResourceFloat",
+    "crane:voltage:ResourceInt"
   ]
 }

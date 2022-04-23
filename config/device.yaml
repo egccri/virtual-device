@@ -8,3 +8,6 @@ devices:
     device_name: 设备002
     device_description: 这是一个上电设备
     device_profile: crane
+virtual_resources:
+  - "crane:current:ResourceFloat"
+  - "crane:voltage:ResourceFloat"

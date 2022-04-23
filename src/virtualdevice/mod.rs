@@ -29,6 +29,8 @@ impl VirtualDeviceTwin {
         for virtual_resource in self.virtual_resources {
             vec.push(virtual_resource.gen());
         }
+        let read_flash = self.flash.clone();
         CPU::run(self.flash, vec);
+        println!("{:?}", read_flash.to_json());
     }
 }
