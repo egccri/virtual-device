@@ -8,11 +8,12 @@ use std::sync::Arc;
 pub struct ResourceInt {
     // must defined in the profile
     device_resource: &'static DeviceResource,
+    speed: i32,
 }
 
 impl ResourceInt {
-    pub fn new(device_resource: &'static DeviceResource) -> Self {
-        ResourceInt { device_resource }
+    pub fn new(device_resource: &'static DeviceResource, speed: i32) -> Self {
+        ResourceInt { device_resource, speed }
     }
 }
 

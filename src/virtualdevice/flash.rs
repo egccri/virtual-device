@@ -18,7 +18,7 @@ impl Flash {
         self.store.lock().unwrap().insert(resource_name, value);
     }
 
-    pub fn to_json(&self) -> String{
+    pub fn to_json(&self) -> String {
         serde_json::to_string(self.store.lock().unwrap().deref()).unwrap()
     }
 

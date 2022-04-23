@@ -8,7 +8,6 @@ use std::sync::Arc;
 
 pub mod resource_float;
 pub mod resource_int;
-pub mod types;
 
 // 产生值的速度（时间间隔）
 pub type Speed = i32;
@@ -61,11 +60,11 @@ impl<'de> Deserialize<'de> for VirtualResource {
 impl VirtualResource {
     pub fn gen(self) -> Box<dyn Runnable> {
         match self {
-            VirtualResource::ResourceFloat(device_resource, _) => {
-                Box::new(resource_float::ResourceFloat::new(device_resource))
+            VirtualResource::ResourceFloat(device_resource, speed) => {
+                Box::new(resource_float::ResourceFloat::new(device_resource, speed))
             }
-            VirtualResource::ResourceInt(device_resource, _) => {
-                Box::new(resource_int::ResourceInt::new(device_resource))
+            VirtualResource::ResourceInt(device_resource, speed) => {
+                Box::new(resource_int::ResourceInt::new(device_resource, speed))
             }
         }
     }

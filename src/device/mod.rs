@@ -25,16 +25,15 @@ pub fn get_profiles(profile_name: String) -> &'static DeviceProfile {
 #[cfg(test)]
 mod test {
     use crate::device::device_profile::DeviceList;
+    use crate::device::parse_profiles;
     use std::fs::File;
     use std::io::Read;
     use std::string::String;
-    use crate::device::parse_profiles;
 
     #[test]
     fn parse_device_test() {
         parse_profiles();
-        let device_json =
-            File::open("config/device.json").expect("Device config file open error!");
+        let device_json = File::open("config/device.json").expect("Device config file open error!");
         let u: DeviceList = serde_json::from_reader(device_json).unwrap();
         println!("{:?}", u);
 
@@ -45,8 +44,7 @@ mod test {
         let u: DeviceList = toml::from_slice(toml_string.as_bytes()).unwrap();
         println!("{:?}", u);
 
-        let device_yaml =
-            File::open("config/device.yaml").expect("Device config file open error!");
+        let device_yaml = File::open("config/device.yaml").expect("Device config file open error!");
         let u: DeviceList = serde_yaml::from_reader(device_yaml).unwrap();
         println!("{:?}", u);
     }

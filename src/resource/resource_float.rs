@@ -7,11 +7,12 @@ use std::sync::Arc;
 pub struct ResourceFloat {
     // must device in the profile
     device_resource: &'static DeviceResource,
+    speed: i32,
 }
 
 impl ResourceFloat {
-    pub fn new(device_resource: &'static DeviceResource) -> Self {
-        ResourceFloat { device_resource }
+    pub fn new(device_resource: &'static DeviceResource, speed: i32) -> Self {
+        ResourceFloat { device_resource , speed}
     }
 }
 

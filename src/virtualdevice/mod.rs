@@ -2,6 +2,8 @@ use crate::device::device_profile::Device;
 use crate::resource::VirtualResource;
 use crate::{Flash, Runnable, CPU};
 use std::sync::Arc;
+use std::thread::JoinHandle;
+use std::time::{Instant, SystemTime, UNIX_EPOCH};
 
 pub mod cpu;
 pub mod flash;
@@ -24,13 +26,19 @@ impl VirtualDeviceTwin {
         }
     }
 
-    pub fn run(self) {
+    pub fn run(self) -> JoinHandle<()> {
         let mut vec = Vec::<Box<dyn Runnable>>::new();
         for virtual_resource in self.virtual_resources {
             vec.push(virtual_resource.gen());
         }
-        let read_flash = self.flash.clone();
-        CPU::run(self.flash, vec);
-        println!("{:?}", read_flash.to_json());
+        self.flash
+            .update_resource_value("device_id".to_string(), self.device_id);
+        let now = SystemTime::now()
+            .duration_since(UNIX_EPOCH)
+            .unwrap()
+            .as_millis();
+        self.flash
+            .update_resource_value("event_time".to_string(), now.to_string());
+        CPU::run(self.flash, vec)
     }
 }
