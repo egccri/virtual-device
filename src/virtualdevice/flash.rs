@@ -1,6 +1,7 @@
 use std::collections::HashMap;
 use std::sync::Mutex;
 
+#[derive(Debug)]
 pub struct Flash {
     store: Mutex<HashMap<String, String>>,
 }

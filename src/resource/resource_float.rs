@@ -1,9 +1,8 @@
-use crate::virtualdevice::flash::Flash;
-use crate::resource::{ResourceNeed, Runnable};
-use std::any::Any;
-use std::ops::Deref;
-use std::sync::Arc;
 use crate::device::device_profile::DeviceResource;
+use crate::resource::{ResourceNeed, Runnable};
+use crate::virtualdevice::flash::Flash;
+use std::any::Any;
+use std::sync::Arc;
 
 pub struct ResourceFloat {
     // must device in the profile
@@ -12,9 +11,7 @@ pub struct ResourceFloat {
 
 impl ResourceFloat {
     pub fn new(device_resource: &'static DeviceResource) -> Self {
-        ResourceFloat {
-            device_resource,
-        }
+        ResourceFloat { device_resource }
     }
 }
 

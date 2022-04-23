@@ -1,11 +1,10 @@
-use crate::virtualdevice::flash::Flash;
-use std::any::Any;
-use std::sync::Arc;
-use serde::{Deserialize, Deserializer, Serialize};
 use crate::device::device_profile::DeviceResource;
-use crate::CPU;
 use crate::device::DEVICE_PROFILES;
 use crate::resource::VirtualResource::{ResourceFloat, ResourceInt};
+use crate::virtualdevice::flash::Flash;
+use serde::{Deserialize, Deserializer, Serialize};
+use std::any::Any;
+use std::sync::Arc;
 
 pub mod resource_float;
 pub mod resource_int;
@@ -15,7 +14,7 @@ pub mod types;
 pub type Speed = i32;
 
 // 放入构建必须的属性
-#[derive(Debug, PartialEq, Serialize)]
+#[derive(Debug, PartialEq, Serialize, Copy, Clone)]
 pub enum VirtualResource {
     ResourceFloat(&'static DeviceResource, Speed),
     ResourceInt(&'static DeviceResource, Speed),
@@ -23,23 +22,42 @@ pub enum VirtualResource {
 
 impl<'de> Deserialize<'de> for VirtualResource {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
-        where D: Deserializer<'de>
+    where
+        D: Deserializer<'de>,
     {
         let s = String::deserialize(deserializer)?;
         // let a = s.split_once(":");
         let resource_name = "resource_name";
         if s == "ResourceFloat" {
-            Ok(ResourceFloat(DEVICE_PROFILES.get("crane").unwrap().get_resource(resource_name), 1))
+            Ok(ResourceFloat(
+                DEVICE_PROFILES
+                    .get("crane")
+                    .unwrap()
+                    .get_resource(resource_name),
+                1,
+            ))
         } else if s == "ResourceInt" {
-            Ok(ResourceInt(DEVICE_PROFILES.get("crane").unwrap().get_resource(resource_name), 1))
+            Ok(ResourceInt(
+                DEVICE_PROFILES
+                    .get("crane")
+                    .unwrap()
+                    .get_resource(resource_name),
+                1,
+            ))
         } else {
-            Ok(ResourceInt(DEVICE_PROFILES.get("crane").unwrap().get_resource(resource_name), 1))
+            Ok(ResourceInt(
+                DEVICE_PROFILES
+                    .get("crane")
+                    .unwrap()
+                    .get_resource(resource_name),
+                1,
+            ))
         }
     }
 }
 
 impl VirtualResource {
-    fn gen(self) -> Box<dyn Runnable> {
+    pub fn gen(self) -> Box<dyn Runnable> {
         match self {
             VirtualResource::ResourceFloat(device_resource, _) => {
                 Box::new(resource_float::ResourceFloat::new(device_resource))
@@ -50,8 +68,6 @@ impl VirtualResource {
         }
     }
 }
-
-
 
 pub trait ResourceNeed {
     fn value(&self) -> Box<dyn Any>;

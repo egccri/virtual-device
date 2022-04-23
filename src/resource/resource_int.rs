@@ -1,9 +1,9 @@
-use crate::virtualdevice::flash::Flash;
+use crate::device::device_profile::DeviceResource;
 use crate::resource::{ResourceNeed, Runnable};
+use crate::virtualdevice::flash::Flash;
 use rand::Rng;
 use std::any::Any;
 use std::sync::Arc;
-use crate::device::device_profile::DeviceResource;
 
 pub struct ResourceInt {
     // must defined in the profile
@@ -12,9 +12,7 @@ pub struct ResourceInt {
 
 impl ResourceInt {
     pub fn new(device_resource: &'static DeviceResource) -> Self {
-        ResourceInt {
-            device_resource,
-        }
+        ResourceInt { device_resource }
     }
 }
 

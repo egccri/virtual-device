@@ -1,7 +1,7 @@
 use crate::device::device_profile::AccessMode::{ReadOnly, ReadWrite};
+use crate::resource::VirtualResource;
 use serde::{Deserialize, Serialize};
 use std::fmt::{self, Display, Formatter};
-use crate::resource::VirtualResource;
 
 /// There is a small different with kubeedge and edgex virtualdevice model or virtualdevice profile.
 /// This profile doesn't support report single resource, so resource's attrs are unsupported,
@@ -9,24 +9,24 @@ use crate::resource::VirtualResource;
 
 #[derive(Debug, PartialEq, Serialize, Deserialize)]
 pub struct DeviceList {
-    device_num: Option<i32>,
-    devices: Vec<Device>,
+    pub device_num: Option<i32>,
+    pub devices: Vec<Device>,
+    pub virtual_resources: Vec<VirtualResource>,
 }
 
 #[derive(Debug, PartialEq, Serialize, Deserialize)]
 pub struct Device {
-    device_id: String,
-    device_name: String,
-    device_description: Option<String>,
-    device_profile: String,
-    virtual_resources: Vec<VirtualResource>
+    pub device_id: String,
+    pub device_name: String,
+    pub device_description: Option<String>,
+    pub device_profile: String,
 }
 
 #[derive(Debug, PartialEq, Serialize, Deserialize)]
 pub struct DeviceProfile {
-    profile_name: String,
-    profile_description: String,
-    pub(crate) device_resources: Vec<DeviceResource>,
+    pub profile_name: String,
+    pub profile_description: String,
+    pub device_resources: Vec<DeviceResource>,
 }
 
 #[derive(Debug, PartialEq, Serialize, Deserialize)]
@@ -34,7 +34,6 @@ pub struct DeviceResource {
     pub(crate) resource_name: String,
     resource_description: String,
     value: Value,
-    // virtual_resource: String,
 }
 
 #[derive(Debug, PartialEq, Serialize, Deserialize)]

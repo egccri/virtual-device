@@ -1,34 +1,30 @@
+use std::fs::File;
+
+use crate::device::device_profile::DeviceList;
+use crate::resource::Runnable;
 use crate::virtualdevice::cpu::CPU;
 use crate::virtualdevice::flash::Flash;
-use crate::resource::resource_float::ResourceFloat;
-use crate::resource::resource_int::ResourceInt;
-use crate::resource::Runnable;
-use std::sync::Arc;
+use crate::virtualdevice::VirtualDeviceTwin;
 
 pub mod device;
-mod virtualdevice;
-pub mod resource;
 mod reporter;
+pub mod resource;
+mod virtualdevice;
 
 #[tokio::main]
 async fn main() {
-    // initial one virtualdevice
-    let flash = Flash::new();
-    let shared_flash = Arc::new(flash);
+    let device_json = File::open("config/device.json").expect("Device config file open error!");
+    let device_list: DeviceList = serde_json::from_reader(device_json).unwrap();
 
-    // let resource_int = ResourceInt::new("resource_name".to_string());
-    // let resource_float = ResourceFloat::new("resource_name".to_string());
+    for device in device_list.devices {
+        let virtual_device_twin = VirtualDeviceTwin::new(device, device_list.virtual_resources.clone());
+        virtual_device_twin.run();
+    }
 
-    let mut vec = Vec::<Box<dyn Runnable>>::new();
-    // vec.push(Box::new(resource_int));
-    // vec.push(Box::new(resource_float));
-
-    CPU::run(shared_flash, vec);
-
-    match reporter::kafka::kafka_upstream::push().await {
-        Ok(_) => {}
-        Err(err) => {
-            println!("{}", err)
-        }
-    };
+    // match reporter::kafka::kafka_upstream::push().await {
+    //     Ok(_) => {}
+    //     Err(err) => {
+    //         println!("{}", err)
+    //     }
+    // };
 }

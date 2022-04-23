@@ -1,11 +1,10 @@
 use lazy_static::lazy_static;
 
-lazy_static!(
+lazy_static! {
     pub static ref STATIC_A: A = A::new();
-);
+};
 
 fn main() {
-
     let a = A::new();
 
     let b1 = B::new(&a);
@@ -17,10 +16,15 @@ fn main() {
     let other_one = Other::TypeOne(&*STATIC_A);
     let other_two = Other::TypeOne(&*STATIC_A);
 
-
     println!("{:?}, {:?}", b1, b2);
 
-    println!("{:?}, {:?}, {:?}, {:?}", one, two, one.do_some(), two.do_some());
+    println!(
+        "{:?}, {:?}, {:?}, {:?}",
+        one,
+        two,
+        one.do_some(),
+        two.do_some()
+    );
 
     println!("{:?}, {:?}", other_one, other_two);
 }
@@ -51,19 +55,17 @@ impl A {
     }
 }
 
-impl <'a> B<'a> {
+impl<'a> B<'a> {
     pub fn new(ref_a: &'a A) -> Self {
-        B {
-            ref_a,
-        }
+        B { ref_a }
     }
 }
 
-impl <'a> Type<'a> {
+impl<'a> Type<'a> {
     fn do_some(&self) -> &'a A {
         match *self {
-            Type::TypeOne(a) => { a }
-            Type::TypeTwo(a) => { a }
+            Type::TypeOne(a) => a,
+            Type::TypeTwo(a) => a,
         }
     }
 }

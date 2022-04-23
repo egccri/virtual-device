@@ -1,45 +1,13 @@
+device_num = 2
+
 [[devices]]
 device_id = "001"
 device_name = "设备001"
 device_description = "这是一个上电设备"
-
-[[devices.resources]]
-resource_name = "current"
-resource_description = "电流"
-
-[devices.resources.value]
-access_mode = "ReadOnly"
-minimum = "0"
-maximum = "100"
-
-[[devices.resources]]
-resource_name = "current"
-resource_description = "电压"
-
-[devices.resources.value]
-access_mode = "ReadOnly"
-minimum = "0"
-maximum = "100"
+device_profile = "crane"
 
 [[devices]]
 device_id = "002"
 device_name = "设备002"
 device_description = "这是一个上电设备"
-
-[[devices.resources]]
-resource_name = "current"
-resource_description = "电流"
-
-[devices.resources.value]
-access_mode = "ReadOnly"
-minimum = "0"
-maximum = "100"
-
-[[devices.resources]]
-resource_name = "current"
-resource_description = "电压"
-
-[devices.resources.value]
-access_mode = "ReadOnly"
-minimum = "0"
-maximum = "100"
+device_profile = "crane"
