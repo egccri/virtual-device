@@ -3,7 +3,8 @@ use crate::resource::VirtualResource;
 use crate::{Flash, Runnable, CPU};
 use std::sync::Arc;
 use std::thread::JoinHandle;
-use std::time::{Instant, SystemTime, UNIX_EPOCH};
+use std::time::{SystemTime, UNIX_EPOCH};
+use tokio::sync::mpsc::Sender;
 
 pub mod cpu;
 pub mod flash;
@@ -13,16 +14,22 @@ pub struct VirtualDeviceTwin {
     flash: Arc<Flash>,
     device_id: String,
     virtual_resources: Vec<VirtualResource>,
+    sender: Sender<String>,
 }
 
 impl VirtualDeviceTwin {
-    pub fn new(device: Device, virtual_resources: Vec<VirtualResource>) -> Self {
+    pub fn new(
+        device: Device,
+        virtual_resources: Vec<VirtualResource>,
+        sender: Sender<String>,
+    ) -> Self {
         let flash = Flash::new();
         let shared_flash = Arc::new(flash);
         VirtualDeviceTwin {
             flash: shared_flash,
             device_id: device.device_id,
             virtual_resources,
+            sender,
         }
     }
 
@@ -39,6 +46,6 @@ impl VirtualDeviceTwin {
             .as_millis();
         self.flash
             .update_resource_value("event_time".to_string(), now.to_string());
-        CPU::run(self.flash, vec)
+        CPU::run(self.flash, vec, self.sender)
     }
 }

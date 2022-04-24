@@ -4,7 +4,8 @@
 
 1. Write your `DeviceProfile` as config file(config/profile.json).
 2. Write your `DeviceList` and `VirtualResource` as config file(config/device.json), `VirtualResource` is referred to device resources which define in `DeviceProfile`
-3. Run `main`
+3. Install a kafka broker and create topic(default `test`), config them in the `kafka_reporter`.
+4. Run `main`
 
 ### Understand how it worked
 

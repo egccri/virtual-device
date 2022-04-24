@@ -13,7 +13,10 @@ pub struct ResourceInt {
 
 impl ResourceInt {
     pub fn new(device_resource: &'static DeviceResource, speed: i32) -> Self {
-        ResourceInt { device_resource, speed }
+        ResourceInt {
+            device_resource,
+            speed,
+        }
     }
 }
 

@@ -1,18 +1,14 @@
+use crate::reporter::KAFKA_PRODUCER;
 use rdkafka::error::KafkaError;
 use rdkafka::message::OwnedMessage;
 use rdkafka::producer::{FutureProducer, FutureRecord};
 use rdkafka::ClientConfig;
-use std::boxed::Box;
 use std::time::Duration;
-use crate::reporter::KAFKA_PRODUCER;
 
 /// 客户端配置
 /// 正好一次、手动提交、使用key分区，保证顺序性
 
-fn log_produce_result(
-    topic: &str,
-    result: Result<(i32, i64), (KafkaError, OwnedMessage)>,
-) -> Result<(), ()> {
+fn log_produce_result(topic: &str, result: Result<(i32, i64), (KafkaError, OwnedMessage)>) -> Result<(), ()> {
     result
         .and_then(|(p, o)| {
             println!(
@@ -39,8 +35,7 @@ pub fn create_produce() -> FutureProducer {
     producer
 }
 
-pub async fn push(message: String, mut topic: Option<&str>) -> Result<(), Box<dyn std::error::Error>> {
-
+pub async fn push(message: String, topic: Option<&str>) {
     let topic_str = topic.unwrap_or("test");
 
     let message = KAFKA_PRODUCER
@@ -66,6 +61,4 @@ pub async fn push(message: String, mut topic: Option<&str>) -> Result<(), Box<dy
     //         )
     //     })
     //     .collect::<Vec<_>>();
-
-    Ok(())
 }

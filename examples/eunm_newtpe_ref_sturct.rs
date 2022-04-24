@@ -2,7 +2,7 @@ use lazy_static::lazy_static;
 
 lazy_static! {
     pub static ref STATIC_A: A = A::new();
-};
+}
 
 fn main() {
     let a = A::new();

@@ -12,7 +12,10 @@ pub struct ResourceFloat {
 
 impl ResourceFloat {
     pub fn new(device_resource: &'static DeviceResource, speed: i32) -> Self {
-        ResourceFloat { device_resource , speed }
+        ResourceFloat {
+            device_resource,
+            speed,
+        }
     }
 }
 
