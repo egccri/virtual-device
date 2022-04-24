@@ -24,3 +24,24 @@ mqtt sequence with one device one topic which topic name is `topic_prefix/device
 
 + resource_float : random f32
 + resource_int: random i32 between maximum and minimum
+
+### Example
+
+```
+"{\"device_id\":\"001\",\"event_time\":\"1650793385418\",\"current\":\"1.5\",\"voltage\":\"9\"}"
+"{\"device_id\":\"002\",\"voltage\":\"7\",\"event_time\":\"1650793385418\",\"current\":\"1.5\"}"
+Successfully produced record to topic test partition [0] @ offset 436
+Successfully produced record to topic test partition [0] @ offset 437
+"{\"device_id\":\"001\",\"event_time\":\"1650793385418\",\"current\":\"1.5\",\"voltage\":\"3\"}"
+"{\"device_id\":\"002\",\"voltage\":\"0\",\"event_time\":\"1650793385418\",\"current\":\"1.5\"}"
+Successfully produced record to topic test partition [0] @ offset 438
+Successfully produced record to topic test partition [0] @ offset 439
+"{\"device_id\":\"001\",\"event_time\":\"1650793385418\",\"current\":\"1.5\",\"voltage\":\"0\"}"
+"{\"device_id\":\"002\",\"voltage\":\"0\",\"event_time\":\"1650793385418\",\"current\":\"1.5\"}"
+Successfully produced record to topic test partition [0] @ offset 440
+Successfully produced record to topic test partition [0] @ offset 441
+"{\"device_id\":\"001\",\"event_time\":\"1650793385418\",\"current\":\"1.5\",\"voltage\":\"4\"}"
+"{\"device_id\":\"002\",\"voltage\":\"0\",\"event_time\":\"1650793385418\",\"current\":\"1.5\"}"
+Successfully produced record to topic test partition [0] @ offset 442
+Successfully produced record to topic test partition [0] @ offset 443
+```
