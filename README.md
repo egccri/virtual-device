@@ -22,8 +22,10 @@ mqtt sequence with one device one topic which topic name is `topic_prefix/device
 
 ### Supported virtual resource
 
-+ resource_float : random f32
++ resource_float : random f32 between maximum and minimum
 + resource_int: random i32 between maximum and minimum
++ one_of_list: config a type list, get one of them
+
 
 ### Example
 

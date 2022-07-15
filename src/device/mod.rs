@@ -40,7 +40,7 @@ mod test {
         let mut device_toml =
             File::open("config/device.toml").expect("Device config file open error!");
         let mut toml_string = String::new();
-        device_toml.read_to_string(&mut toml_string);
+        device_toml.read_to_string(&mut toml_string).expect("Toml read error");
         let u: DeviceList = toml::from_slice(toml_string.as_bytes()).unwrap();
         println!("{:?}", u);
 
